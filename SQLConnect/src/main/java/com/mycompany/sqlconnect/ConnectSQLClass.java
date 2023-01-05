@@ -123,18 +123,34 @@ public class ConnectSQLClass implements ISQL {
 
     @Override
     public int updateRows(String tableName, String column, String conditionColumn, String[] conditions, String[] values) {
+        //  UPDATE tableName SET conditions = 'values' WHERE columns = 'conditionColumn';
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public boolean updateColumns(String tableName, String[] columns, String[] values, String condition) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      try {
+      //  UPDATE tableName SET columns = 'values' WHERE columns = 'condition';
+       int i=0;
+     String update = "UPDATE " + tableName ;
+     for (String col : columns) {
+         
+         if(col==condition){
+             update +=  " SET " + col +"=" + "'" + values[i]+ "'"+"WHERE "+ columns +" LIKE" + "'" + condition +"'; ";             
+        }
+         i++;
+     }
+          stm.execute(update);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public boolean delete(String tableName) {
         try {
-            String del = "DELITE TABLE" + tableName + ';';
+            String del = "DELETE TABLE" + tableName + ';';
             return stm.execute(del);
         } catch (Exception e) {
             return false;
@@ -143,7 +159,13 @@ public class ConnectSQLClass implements ISQL {
 
     @Override
     public int deleteRows(String tableName, String condition) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // DELETE FROM tableName WERE condition
+        try {
+            String del = "DELETE FROM " + tableName + " WHERE " +condition +';';
+            return stm.executeUpdate(del);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     @Override
@@ -151,10 +173,13 @@ public class ConnectSQLClass implements ISQL {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public boolean PK(String tableName, String columns) {
-        String PK = "PRIMARY KEY"+"(";
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    public boolean PrimaryKey ( String columnsPK) {
+        try {
+            String PK = "PRIMARY KEY" + "(" + columnsPK + ");";
+            return stm.execute(PK);
+        } catch (Exception e) {
+            return false;
+        }
 
+    }
 }

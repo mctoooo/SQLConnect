@@ -17,7 +17,7 @@ public class SQLConnect {
         var user = "postgres";
         var pass = "POSTGRES";
         var name = "my_table";
-        
+        var columnsPK= pass;
         String[][] rows = {{"25", "'rtyy'", "'ert'"}, {"34", "'tgtg'", "'34'"}, {"432", "'fdgdf'", "'dfgdf'"}};
         con.connect(url, user, pass);
 
@@ -31,6 +31,9 @@ public class SQLConnect {
         if (con.insert(name, rows) != -1) {
             System.out.print("INSERTED");
         }
+   //     if (con.PrimaryKey(name)) {
+   //         System.out.print("PK_INSERTED");
+   //     }
 
     }
 

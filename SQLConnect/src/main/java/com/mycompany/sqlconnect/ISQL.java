@@ -15,8 +15,6 @@ public interface ISQL extends AutoCloseable {
 
     boolean connect(String url, String username, String password);
     
-    boolean PK (String tableName, String columns);
-
     boolean create(String tableName, String[] columns) throws SQLException, Exception;
 
     int insert(String tableName, String[][] rows);
