@@ -25,9 +25,15 @@ public interface ISQL extends AutoCloseable {
 
     public LinkedList<String> select(String tableName, String[] columns);
 
-    boolean delete(String tableName);
+    boolean drop_Table(String tableName);
+    
+    boolean Cleaner_TABLE(String tableName);
 
     int deleteRows(String tableName, String condition);
+    
+    boolean PrimaryKey (String tableName,String columnsPK);
+    
+    boolean dropColumn(String tableName, String column);
 
     boolean addColumn(String tableName, String column);  //column = "name TEXT NOT NULL"
     

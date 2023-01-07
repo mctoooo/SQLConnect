@@ -123,63 +123,154 @@ public class ConnectSQLClass implements ISQL {
 
     @Override
     public int updateRows(String tableName, String column, String conditionColumn, String[] conditions, String[] values) {
-        //  UPDATE tableName SET conditions = 'values' WHERE columns = 'conditionColumn';
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public boolean updateColumns(String tableName, String[] columns, String[] values, String condition) {
-      try {
-      //  UPDATE tableName SET columns = 'values' WHERE columns = 'condition';
-       int i=0;
-     String update = "UPDATE " + tableName ;
-     for (String col : columns) {
-         
-         if(col==condition){
-             update +=  " SET " + col +"=" + "'" + values[i]+ "'"+"WHERE "+ columns +" LIKE" + "'" + condition +"'; ";             
-        }
-         i++;
-     }
-          stm.execute(update);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean delete(String tableName) {
+        /*       
+        UPDATE tableName
+         SET conditionColumn = CASE column
+            WHEN 'conditions1' THEN values1
+            WHEN 'conditions2' THEN values2
+         ELSE conditionColumn
+         END
+        WHERE column IN('conditions1', 'conditions2');
+         */
         try {
-            String del = "DELETE TABLE" + tableName + ';';
-            return stm.execute(del);
-        } catch (Exception e) {
-            return false;
-        }
-    }
+            String updR = "UPDATE " + tableName + " SET " + conditionColumn + "=" + "CASE " + column + " ";
+            int i = 0;
+           
+            for (String cond : conditions) {
+                updR = updR + "WHEN'" + cond + "'THEN'" + values[i] + "'";
+                
+                System.out.println(cond);
+                System.out.println(values[i]);
+                System.out.println(updR);
+                i++;
+            }
+  //          updR = updR.substring(0, updR.length()-1);
+            
+            updR = updR + "ELSE " + conditionColumn + " END ";
+            updR = updR + "WHERE " + column + " IN('";
+            
+            for (String cond : conditions) {
+                updR = updR + cond + "','";
+            }
+            updR = updR.substring(0, updR.length()-2);
+            updR = updR + ");";
 
-    @Override
-    public int deleteRows(String tableName, String condition) {
-        // DELETE FROM tableName WERE condition
-        try {
-            String del = "DELETE FROM " + tableName + " WHERE " +condition +';';
-            return stm.executeUpdate(del);
+            System.out.println(updR);
+            return stm.executeUpdate(updR);
         } catch (Exception e) {
             return -1;
         }
     }
 
-    @Override
-    public boolean addColumn(String tableName, String column) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public boolean PrimaryKey ( String columnsPK) {
+        @Override
+        public boolean updateColumns
+        (String tableName, String[] columns
+        , String[] values, String condition
+        
+            ) {
         try {
-            String PK = "PRIMARY KEY" + "(" + columnsPK + ");";
-            return stm.execute(PK);
-        } catch (Exception e) {
-            return false;
+                //  UPDATE tableName SET column1='value1',column2='value2'WHERE columns='condition';
+                int i = 0;
+                String update = "UPDATE " + tableName + " SET ";
+                for (String col : columns) {
+
+                    update = update + col + "=" + "'" + values[i] + "'" + ",";
+                    i++;
+                }
+
+                update = update.substring(0, update.length() - 1);
+
+                update = update + "WHERE " + condition + ";";
+
+                System.out.println(update);
+                stm.execute(update);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
         }
 
+        @Override
+        public boolean drop_Table
+        (String tableName
+        
+            ) {
+        try {
+                String del = "DROP TABLE " + tableName + ';';
+                return stm.execute(del);
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        public boolean Cleaner_TABLE
+        (String tableName
+        
+            ) {
+        try {
+                String cleaner = "TRUNCATE TABLE " + tableName + ';';
+                return stm.execute(cleaner);
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        public int deleteRows
+        (String tableName, String condition
+        
+            ) {
+        // DELETE FROM tableName WERE condition
+        try {
+                String del = "DELETE FROM " + tableName + " WHERE " + condition + ';';
+                return stm.executeUpdate(del);
+            } catch (Exception e) {
+                return -1;
+            }
+        }
+
+        @Override
+        public boolean addColumn
+        (String tableName, String column
+        
+            ) {
+        try {
+                //    ALTER TABLE tableName ADD column ;
+                String addCol = "ALTER TABLE " + tableName + " ADD " + column + ';';
+                return stm.execute(addCol);
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        public boolean dropColumn
+        (String tableName, String column
+        
+            ) {
+        try {
+                //    ALTER TABLE tableName DROP COLUMN column ;
+                String dropCol = "ALTER TABLE " + tableName + " DROP COLUMN " + column + ';';
+                return stm.execute(dropCol);
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        public boolean PrimaryKey
+        (String tableName, String columnsPK
+        
+            ) {
+        try {
+                //         ALTER TABLE books ADD PRIMARY KEY (book_id);
+                String PK = "ALTER TABLE " + tableName + " ADD PRIMARY KEY" + "(" + columnsPK + ");";
+                return stm.execute(PK);
+            } catch (Exception e) {
+                return false;
+            }
+
+        }
     }
-}
