@@ -120,7 +120,15 @@ public class ConnectSQLClass implements ISQL {
         }
 
     }
-
+/**
+ * 
+ * @param tableName
+ * @param column
+ * @param conditionColumn
+ * @param conditions
+ * @param values
+ * @return 
+ */
     @Override
     public int updateRows(String tableName, String column, String conditionColumn, String[] conditions, String[] values) {
 
@@ -140,13 +148,10 @@ public class ConnectSQLClass implements ISQL {
             for (String cond : conditions) {
                 updR = updR + "WHEN'" + cond + "'THEN'" + values[i] + "'";
                 
-                System.out.println(cond);
-                System.out.println(values[i]);
-                System.out.println(updR);
+
                 i++;
             }
-  //          updR = updR.substring(0, updR.length()-1);
-            
+              
             updR = updR + "ELSE " + conditionColumn + " END ";
             updR = updR + "WHERE " + column + " IN('";
             
@@ -156,7 +161,7 @@ public class ConnectSQLClass implements ISQL {
             updR = updR.substring(0, updR.length()-2);
             updR = updR + ");";
 
-            System.out.println(updR);
+            
             return stm.executeUpdate(updR);
         } catch (Exception e) {
             return -1;
@@ -165,10 +170,7 @@ public class ConnectSQLClass implements ISQL {
 
         @Override
         public boolean updateColumns
-        (String tableName, String[] columns
-        , String[] values, String condition
-        
-            ) {
+        (String tableName, String[] columns, String[] values, String condition) {
         try {
                 //  UPDATE tableName SET column1='value1',column2='value2'WHERE columns='condition';
                 int i = 0;
@@ -192,7 +194,7 @@ public class ConnectSQLClass implements ISQL {
         }
 
         @Override
-        public boolean drop_Table
+        public boolean dropTable
         (String tableName
         
             ) {
@@ -205,7 +207,7 @@ public class ConnectSQLClass implements ISQL {
         }
 
         @Override
-        public boolean Cleaner_TABLE
+        public boolean cleanerTABLE
         (String tableName
         
             ) {

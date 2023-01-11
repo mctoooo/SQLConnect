@@ -16,7 +16,7 @@ public class SQLConnect {
 
         var url = "jdbc:postgresql://localhost:5432/postgres";
         var user = "postgres";
-        var pass = "POSTGRES";
+        var pass = "postgres";
         var name = "my_table";
         var condition = "v_id=25";
 
@@ -29,24 +29,23 @@ public class SQLConnect {
         arr[2] = "potato varchar(10)";
         var col4 = "cucumber text";
 
- /*       if (con.create(name, arr)) {
+        if (con.create(name, arr)) {
             System.out.println("YES,create");
         }
         if (con.insert(name, rows) != -1) {
             System.out.println("INSERTED");
         }
 
-        con.addColumn(name, col4);
+       con.addColumn(name, col4);
 
-        String[] vall = {"foring"};
+ //       String[] vall = {"foring"};
         String[] coll4 = {"cucumber"};
         condition = "cucumber=''";
-        String[] coll4 = {"cucumber", "potato"};
         String[] vall = {"no bed", "35"};
         condition = "cucumber='foring'";
         con.updateColumns(name, coll4, vall, condition);
         condition = "v_id=432";
-        String[] coll4 = {"cucumber", "potato"};
+  /*      String[] coll4 = {"cucumber", "potato"};
         String[] vall = {"foring", "Egypt"};
         con.updateColumns(name, coll4, vall, condition);
         String[][] rowsS = {{"26", "'rtyy'", "'ert'", "'black'"}, {"36", "'tgtg'", "'34'", "'wite'"}, {"4232", "'fdgdf'", "'dfgdf'", "'green'"}};
@@ -55,17 +54,17 @@ public class SQLConnect {
             System.out.println("ROWS DELETED");
         }
 */
-//        condition = "v_id";
-//        if (con.PrimaryKey(name, condition)) {
-//            System.out.println(" -PK- ");
-//        }
+        condition = "v_id";
+        if (con.PrimaryKey(name, condition)) {
+           System.out.println(" -PK- ");
+        }
 //     condition ="potato";
 //     var col="v_name";
 //     String[] args1={"tgtg","rtyy"};
 //     String[] args2={"smoll","big"};     
 //    con.updateRows(name, col, condition, args1, args2);
- //       con.Cleaner_TABLE(name);
- //       con.drop_Table(name);
+ //       con.cleanerTABLE(name);
+ //       con.dropTable(name);
     }
 
 }
