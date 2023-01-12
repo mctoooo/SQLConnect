@@ -1,0 +1,7 @@
+products
+prod_name,varchar(20),pk
+prod_type,varchar(20),pk
+prod_amt,varchar,
+prod prod_price,int,NOTNUL
+prod_discount,int
+

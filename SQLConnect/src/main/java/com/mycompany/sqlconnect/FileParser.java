@@ -16,11 +16,15 @@ import java.util.logging.Logger;
  * @author Student
  */
 public class FileParser {
-    
-  ArrayList Parser(String fileName){
+/**
+ * 
+ * @param pathName-path of the file.csv
+ * @return ArrayList<String[]> where each cell contains one file line element. (else if the file does not exist return null)
+ */    
+  public static ArrayList<String[]> Parser(String pathName){
       try{
     
-            CSVReader reader = new CSVReader(new FileReader(fileName)); 
+            CSVReader reader = new CSVReader(new FileReader(pathName)); 
 
                 ArrayList TableCSV = new ArrayList<String[]>();
                 String[] lineInArray;
@@ -29,23 +33,35 @@ public class FileParser {
                     TableCSV.add (lineInArray);
                 }
                 
-                System.out.println("file: " + fileName);
+                System.out.println("file: " + pathName);
 
-             reader = new CSVReader(new FileReader(fileName));
+             reader = new CSVReader(new FileReader(pathName));
                 while((lineInArray  = reader.readNext()) != null)
                 {
                     for(String line: lineInArray)
                         System.out.print(line + " ");
                     System.out.println();
                 }
-                
-            
-       
+                            
+       return TableCSV;
         } catch (Exception ex) 
         {
             return null;
         }
-      return TableCSV;    
+  }
+      
+        public static String[][] ArrayListToArray(ArrayList<String[]>list){
+            String [] array=(String[])list.toArray();
+            
+            System.out.print(array.toString());
+//            int size = list.size();
+//            for(String[] listTo:list){
+//                
+//            }
+            return null;
+        }
+        
+          
     }
-}
+
 

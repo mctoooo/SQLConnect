@@ -142,7 +142,7 @@ public class ConnectSQLClass implements ISQL {
         WHERE column IN('conditions1', 'conditions2');
          */
         try {
-            String updR = "UPDATE " + tableName + " SET " + conditionColumn + "=" + "CASE " + column + " ";
+            String updR = "UPDATE " + tableName + " SET " + conditionColumn + "= CASE " + column + " ";
             int i = 0;
            
             for (String cond : conditions) {
@@ -169,10 +169,9 @@ public class ConnectSQLClass implements ISQL {
     }
 
         @Override
-        public boolean updateColumns
-        (String tableName, String[] columns, String[] values, String condition) {
+        public boolean updateColumns(String tableName, String[] columns, String[] values, String condition) {
         try {
-                //  UPDATE tableName SET column1='value1',column2='value2'WHERE columns='condition';
+                //  UPDATE tableName SET column1='value1',column2='value2'WHERE condition;
                 int i = 0;
                 String update = "UPDATE " + tableName + " SET ";
                 for (String col : columns) {
@@ -185,7 +184,7 @@ public class ConnectSQLClass implements ISQL {
 
                 update = update + "WHERE " + condition + ";";
 
-                System.out.println(update);
+                
                 stm.execute(update);
                 return true;
             } catch (Exception e) {
@@ -194,10 +193,7 @@ public class ConnectSQLClass implements ISQL {
         }
 
         @Override
-        public boolean dropTable
-        (String tableName
-        
-            ) {
+        public boolean dropTable(String tableName) {
         try {
                 String del = "DROP TABLE " + tableName + ';';
                 return stm.execute(del);
@@ -207,10 +203,7 @@ public class ConnectSQLClass implements ISQL {
         }
 
         @Override
-        public boolean cleanerTABLE
-        (String tableName
-        
-            ) {
+        public boolean cleanerTABLE(String tableName) {
         try {
                 String cleaner = "TRUNCATE TABLE " + tableName + ';';
                 return stm.execute(cleaner);
@@ -220,10 +213,7 @@ public class ConnectSQLClass implements ISQL {
         }
 
         @Override
-        public int deleteRows
-        (String tableName, String condition
-        
-            ) {
+        public int deleteRows(String tableName, String condition) {
         // DELETE FROM tableName WERE condition
         try {
                 String del = "DELETE FROM " + tableName + " WHERE " + condition + ';';
@@ -234,13 +224,10 @@ public class ConnectSQLClass implements ISQL {
         }
 
         @Override
-        public boolean addColumn
-        (String tableName, String column
-        
-            ) {
+        public boolean addColumn(String tableName, String column) {
         try {
                 //    ALTER TABLE tableName ADD column ;
-                String addCol = "ALTER TABLE " + tableName + " ADD " + column + ';';
+                String addCol = "ALTER TABLE " + tableName + " ADD " + column + ';';                
                 return stm.execute(addCol);
             } catch (Exception e) {
                 return false;
@@ -248,10 +235,7 @@ public class ConnectSQLClass implements ISQL {
         }
 
         @Override
-        public boolean dropColumn
-        (String tableName, String column
-        
-            ) {
+        public boolean dropColumn(String tableName, String column) {
         try {
                 //    ALTER TABLE tableName DROP COLUMN column ;
                 String dropCol = "ALTER TABLE " + tableName + " DROP COLUMN " + column + ';';
@@ -261,11 +245,8 @@ public class ConnectSQLClass implements ISQL {
             }
         }
 
-        @Override
-        public boolean PrimaryKey
-        (String tableName, String columnsPK
-        
-            ) {
+       
+        public boolean PrimaryKey(String tableName, String columnsPK) {
         try {
                 //         ALTER TABLE books ADD PRIMARY KEY (book_id);
                 String PK = "ALTER TABLE " + tableName + " ADD PRIMARY KEY" + "(" + columnsPK + ");";

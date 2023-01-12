@@ -30,9 +30,7 @@ public interface ISQL extends AutoCloseable {
     boolean cleanerTABLE(String tableName);
 
     int deleteRows(String tableName, String condition);
-    
-    boolean PrimaryKey (String tableName,String columnsPK);
-    
+            
     boolean dropColumn(String tableName, String column);
 
     boolean addColumn(String tableName, String column);  //column = "name TEXT NOT NULL"

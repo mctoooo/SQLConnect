@@ -4,6 +4,8 @@
  */
 package com.mycompany.sqlconnect;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Student
@@ -19,6 +21,7 @@ public class SQLConnect {
         var pass = "postgres";
         var name = "my_table";
         var condition = "v_id=25";
+        var col4 = "cucumber text";
 
         String[][] rows = {{"25", "'rtyy'", "'ert'"}, {"34", "'tgtg'", "'34'"}, {"432", "'fdgdf'", "'dfgdf'"}};
         con.connect(url, user, pass);
@@ -27,24 +30,25 @@ public class SQLConnect {
         arr[0] = "v_id SERIAL";
         arr[1] = "v_name text";
         arr[2] = "potato varchar(10)";
-        var col4 = "cucumber text";
+        
 
         if (con.create(name, arr)) {
-            System.out.println("YES,create");
+            System.out.println("YES,con create.");
         }
-        if (con.insert(name, rows) != -1) {
-            System.out.println("INSERTED");
-        }
+//        if (con.insert(name, rows) != -1) {
+//            System.out.println("INSERTED");
+//        }
 
-       con.addColumn(name, col4);
+ //      con.addColumn(name, col4);
 
- //       String[] vall = {"foring"};
-        String[] coll4 = {"cucumber"};
-        condition = "cucumber=''";
-        String[] vall = {"no bed", "35"};
-        condition = "cucumber='foring'";
-        con.updateColumns(name, coll4, vall, condition);
-        condition = "v_id=432";
+//       String[] vall = {"foring"};
+//        String[] coll4 = {"cucumber"};
+//        condition = "cucumber is NULL";
+//        con.updateColumns(name, coll4, vall, condition);
+//      String[] vall = {"no bed", "35"};
+//      condition = "cucumber='foring'";
+//        con.updateColumns(name, coll4, vall, condition);
+//        condition = "v_id=432";
   /*      String[] coll4 = {"cucumber", "potato"};
         String[] vall = {"foring", "Egypt"};
         con.updateColumns(name, coll4, vall, condition);
@@ -54,10 +58,10 @@ public class SQLConnect {
             System.out.println("ROWS DELETED");
         }
 */
-        condition = "v_id";
-        if (con.PrimaryKey(name, condition)) {
-           System.out.println(" -PK- ");
-        }
+//        condition = "v_id";
+//        if (con.PrimaryKey(name, condition)) {
+//           System.out.println(" -PK- ");
+//        }
 //     condition ="potato";
 //     var col="v_name";
 //     String[] args1={"tgtg","rtyy"};
@@ -65,6 +69,11 @@ public class SQLConnect {
 //    con.updateRows(name, col, condition, args1, args2);
  //       con.cleanerTABLE(name);
  //       con.dropTable(name);
+ 
+    String pathName ="description of fields.csv";
+    ArrayList parsedFile = FileParser.Parser(pathName);
+    String [][] arrF ;
+     FileParser.ArrayListToArray(parsedFile);
     }
 
 }
