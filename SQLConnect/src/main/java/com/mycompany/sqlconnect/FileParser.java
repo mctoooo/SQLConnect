@@ -46,19 +46,35 @@ public class FileParser {
        return TableCSV;
         } catch (Exception ex) 
         {
-            return null;
+            
+            return  new ArrayList<>();
         }
   }
       
         public static String[][] ArrayListToArray(ArrayList<String[]>list){
-            String [] array=(String[])list.toArray();
-            
-            System.out.print(array.toString());
-//            int size = list.size();
-//            for(String[] listTo:list){
-//                
-//            }
-            return null;
+            try{
+            Object [] arr = list.toArray();
+            String [][] array = null;
+            int i=0;
+            array = new String [arr.length][];
+            for (Object row:arr)
+            {
+                array[i++]=(String[])row;
+            }           
+     //     String [][] array=list.toArray(new String[list.size()][]);
+               for(String [] rows :array){ 
+                   for(String el: rows){
+            System.out.print(el+" ");
+                   } 
+                 System.out.println();  
+               }
+            return array;
+            } catch(Exception ex)
+            {
+                
+            return new String[1][];
+            }
+        
         }
         
           

@@ -120,15 +120,16 @@ public class ConnectSQLClass implements ISQL {
         }
 
     }
-/**
- * 
- * @param tableName
- * @param column
- * @param conditionColumn
- * @param conditions
- * @param values
- * @return 
- */
+
+    /**
+     *
+     * @param tableName
+     * @param column
+     * @param conditionColumn
+     * @param conditions
+     * @param values
+     * @return
+     */
     @Override
     public int updateRows(String tableName, String column, String conditionColumn, String[] conditions, String[] values) {
 
@@ -144,116 +145,134 @@ public class ConnectSQLClass implements ISQL {
         try {
             String updR = "UPDATE " + tableName + " SET " + conditionColumn + "= CASE " + column + " ";
             int i = 0;
-           
+
             for (String cond : conditions) {
                 updR = updR + "WHEN'" + cond + "'THEN'" + values[i] + "'";
-                
 
                 i++;
             }
-              
+
             updR = updR + "ELSE " + conditionColumn + " END ";
             updR = updR + "WHERE " + column + " IN('";
-            
+
             for (String cond : conditions) {
                 updR = updR + cond + "','";
             }
-            updR = updR.substring(0, updR.length()-2);
+            updR = updR.substring(0, updR.length() - 2);
             updR = updR + ");";
 
-            
             return stm.executeUpdate(updR);
         } catch (Exception e) {
             return -1;
         }
     }
 
-        @Override
-        public boolean updateColumns(String tableName, String[] columns, String[] values, String condition) {
+    @Override
+    public boolean updateColumns(String tableName, String[] columns, String[] values, String condition) {
         try {
-                //  UPDATE tableName SET column1='value1',column2='value2'WHERE condition;
-                int i = 0;
-                String update = "UPDATE " + tableName + " SET ";
-                for (String col : columns) {
+            //  UPDATE tableName SET column1='value1',column2='value2'WHERE condition;
+            int i = 0;
+            String update = "UPDATE " + tableName + " SET ";
+            for (String col : columns) {
 
-                    update = update + col + "=" + "'" + values[i] + "'" + ",";
-                    i++;
-                }
-
-                update = update.substring(0, update.length() - 1);
-
-                update = update + "WHERE " + condition + ";";
-
-                
-                stm.execute(update);
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
-        }
-
-        @Override
-        public boolean dropTable(String tableName) {
-        try {
-                String del = "DROP TABLE " + tableName + ';';
-                return stm.execute(del);
-            } catch (Exception e) {
-                return false;
-            }
-        }
-
-        @Override
-        public boolean cleanerTABLE(String tableName) {
-        try {
-                String cleaner = "TRUNCATE TABLE " + tableName + ';';
-                return stm.execute(cleaner);
-            } catch (Exception e) {
-                return false;
-            }
-        }
-
-        @Override
-        public int deleteRows(String tableName, String condition) {
-        // DELETE FROM tableName WERE condition
-        try {
-                String del = "DELETE FROM " + tableName + " WHERE " + condition + ';';
-                return stm.executeUpdate(del);
-            } catch (Exception e) {
-                return -1;
-            }
-        }
-
-        @Override
-        public boolean addColumn(String tableName, String column) {
-        try {
-                //    ALTER TABLE tableName ADD column ;
-                String addCol = "ALTER TABLE " + tableName + " ADD " + column + ';';                
-                return stm.execute(addCol);
-            } catch (Exception e) {
-                return false;
-            }
-        }
-
-        @Override
-        public boolean dropColumn(String tableName, String column) {
-        try {
-                //    ALTER TABLE tableName DROP COLUMN column ;
-                String dropCol = "ALTER TABLE " + tableName + " DROP COLUMN " + column + ';';
-                return stm.execute(dropCol);
-            } catch (Exception e) {
-                return false;
-            }
-        }
-
-       
-        public boolean PrimaryKey(String tableName, String columnsPK) {
-        try {
-                //         ALTER TABLE books ADD PRIMARY KEY (book_id);
-                String PK = "ALTER TABLE " + tableName + " ADD PRIMARY KEY" + "(" + columnsPK + ");";
-                return stm.execute(PK);
-            } catch (Exception e) {
-                return false;
+                update = update + col + "=" + "'" + values[i] + "'" + ",";
+                i++;
             }
 
+            update = update.substring(0, update.length() - 1);
+
+            update = update + "WHERE " + condition + ";";
+
+            stm.execute(update);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
+
+    @Override
+    public boolean dropTable(String tableName) {
+        try {
+            String del = "DROP TABLE " + tableName + ';';
+            return stm.execute(del);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean cleanerTABLE(String tableName) {
+        try {
+            String cleaner = "TRUNCATE TABLE " + tableName + ';';
+            return stm.execute(cleaner);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public int deleteRows(String tableName, String condition) {
+        // DELETE FROM tableName WERE condition
+        try {
+            String del = "DELETE FROM " + tableName + " WHERE " + condition + ';';
+            return stm.executeUpdate(del);
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
+    @Override
+    public boolean addColumn(String tableName, String column) {
+        try {
+            //    ALTER TABLE tableName ADD column ;
+            String addCol = "ALTER TABLE " + tableName + " ADD " + column + ';';
+            return stm.execute(addCol);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean dropColumn(String tableName, String column) {
+        try {
+            //    ALTER TABLE tableName DROP COLUMN column ;
+            String dropCol = "ALTER TABLE " + tableName + " DROP COLUMN " + column + ';';
+            return stm.execute(dropCol);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean PrimaryKey(String tableName, String columnsPK) {
+        try {
+            //         ALTER TABLE books ADD PRIMARY KEY (book_id);
+            String PK = "ALTER TABLE " + tableName + " ADD PRIMARY KEY" + "(" + columnsPK + ");";
+            return stm.execute(PK);
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+
+    public boolean AddUniqueConstraint(String tableName, String[] columns) {
+        try {
+//      ALTER TABLE employee ADD CONSTRAINT employee_unq UNIQUE(email);
+
+            String Constraint = "ALTER TABLE " + tableName + "ADD CONSTRAINT " + tableName + "_";
+            for (String el : columns) {
+                el = el.replaceAll("pk", "PRIMARY KEY");
+                Constraint += el.replaceAll(" ", "_") + " UNIQUE(" + el.replaceAll("_", " ") + "),";
+
+            }
+            Constraint = Constraint.substring(0, Constraint.length() - 1);
+            Constraint += ";";
+
+            System.out.print(Constraint);
+
+            return stm.execute(Constraint);
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+}

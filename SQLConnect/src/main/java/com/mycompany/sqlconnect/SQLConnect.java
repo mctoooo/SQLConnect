@@ -32,9 +32,9 @@ public class SQLConnect {
         arr[2] = "potato varchar(10)";
         
 
-        if (con.create(name, arr)) {
-            System.out.println("YES,con create.");
-        }
+//        if (con.create(name, arr)) {
+//            System.out.println("YES,con create.");
+//        }
 //        if (con.insert(name, rows) != -1) {
 //            System.out.println("INSERTED");
 //        }
@@ -73,7 +73,25 @@ public class SQLConnect {
     String pathName ="description of fields.csv";
     ArrayList parsedFile = FileParser.Parser(pathName);
     String [][] arrF ;
-     FileParser.ArrayListToArray(parsedFile);
+     arrF = FileParser.ArrayListToArray(parsedFile);
+     
+     String[] Fields = null;
+     String[] Constraint = null;
+     name = arrF[0][0];
+     for(int i= 0;i==arrF.length;i++)
+     {
+         Constraint[i]=arrF[i][3];
+     }
+     
+     for(int i= 0;i==arrF.length;i++)
+         
+     {
+         Fields[i] = arrF[i][0];
+     }
+     
+     if (con.create(name, Fields)) {
+            System.out.println("YES,con create.");
+        }
     }
 
 }
