@@ -33,7 +33,7 @@ public class SQLConnect {
         
 
 //        if (con.create(name, arr)) {
-//            System.out.println("YES,con create.");
+//            System.out.println("YES, create.");
 //        }
 //        if (con.insert(name, rows) != -1) {
 //            System.out.println("INSERTED");
@@ -68,30 +68,57 @@ public class SQLConnect {
 //     String[] args2={"smoll","big"};     
 //    con.updateRows(name, col, condition, args1, args2);
  //       con.cleanerTABLE(name);
- //       con.dropTable(name);
+ //name = "products";
+  //      con.dropTable(name);
  
     String pathName ="description of fields.csv";
     ArrayList parsedFile = FileParser.Parser(pathName);
     String [][] arrF ;
      arrF = FileParser.ArrayListToArray(parsedFile);
      
-     String[] Fields = null;
-     String[] Constraint = null;
+     String[] Fields = new String [arrF.length-1];
+     String[] ConstraintCol = new String [arrF.length-1];
+     // берём имя таблицы из матрицы
      name = arrF[0][0];
-     for(int i= 0;i==arrF.length;i++)
+     
+     // сохраняем массив с ограничениями
+     for(int i= 1;i<arrF.length;i++)
      {
-         Constraint[i]=arrF[i][3];
+         ConstraintCol[i-1]= arrF[i][2];
+         System.out.println(ConstraintCol[i-1]);
+     }
+     // сщхраняем массив с полями 
+     for(int i= 1;i<arrF.length;i++)         
+     {
+         Fields[i-1] = arrF[i][0]+" "+arrF[i][1];
+          System.out.println(Fields[i-1]);
      }
      
-     for(int i= 0;i==arrF.length;i++)
-         
-     {
-         Fields[i] = arrF[i][0];
-     }
-     
-     if (con.create(name, Fields)) {
-            System.out.println("YES,con create.");
-        }
+    if (con.create(name, Fields)) {
+            System.out.println("YES,table create.");
     }
+    
+    String[] colunms = new String [Fields.length];
+    for(int i= 1;i<arrF.length;i++)         
+     {
+         colunms[i-1]  = arrF[i][0];
+         
+     }
+    String PK="";
+        for(int i=1;i<arrF.length;i++){ 
+             for(int j=0;j<arrF[i].length;j++){
+            if(arrF[i][j]=="pk"){
+            
+                PK=PK +arrF[i][0]+",";
+            }
+                 
+                 
+            }
+         }
+    
+//    if (con.AddUniqueConstraint(name,colunms, ConstraintCol)) {
+//            System.out.println("YES,Constraint create.");
+//    }
 
+}
 }

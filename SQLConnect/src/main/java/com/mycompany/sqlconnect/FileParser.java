@@ -32,16 +32,17 @@ public class FileParser {
                 for(lineInArray = reader.readNext(); lineInArray != null; lineInArray = reader.readNext()){
                     TableCSV.add (lineInArray);
                 }
-                
-                System.out.println("file: " + pathName);
-
-             reader = new CSVReader(new FileReader(pathName));
-                while((lineInArray  = reader.readNext()) != null)
-                {
-                    for(String line: lineInArray)
-                        System.out.print(line + " ");
-                    System.out.println();
-                }
+//                
+//                System.out.println("file: " + pathName);
+//                System.out.println();
+//                
+//             reader = new CSVReader(new FileReader(pathName));
+//                while((lineInArray  = reader.readNext()) != null)
+//                {
+//                    for(String line: lineInArray)
+//                        System.out.print(line + " ");
+//                    System.out.println();
+//                }
                             
        return TableCSV;
         } catch (Exception ex) 

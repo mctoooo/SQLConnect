@@ -254,22 +254,26 @@ public class ConnectSQLClass implements ISQL {
 
     }
 
-    public boolean AddUniqueConstraint(String tableName, String[] columns) {
+    public boolean AddUniqueConstraint(String tableName, String[] columns,String[] Constraint) {
         try {
 //      ALTER TABLE employee ADD CONSTRAINT employee_unq UNIQUE(email);
 
-            String Constraint = "ALTER TABLE " + tableName + "ADD CONSTRAINT " + tableName + "_";
-            for (String el : columns) {
+            String constraint = "ALTER TABLE " + tableName + " ADD CONSTRAINT " + tableName + "_";
+            int i =0;
+            for (String el : Constraint) {
+                if(el!=""){
                 el = el.replaceAll("pk", "PRIMARY KEY");
-                Constraint += el.replaceAll(" ", "_") + " UNIQUE(" + el.replaceAll("_", " ") + "),";
+                constraint += columns[i]+"_"+ el.replaceAll(" ", "_") +" "+ el.replaceAll("_", " ")+"(" + columns[i] + "),";
+                }
 
             }
-            Constraint = Constraint.substring(0, Constraint.length() - 1);
-            Constraint += ";";
-
-            System.out.print(Constraint);
-
-            return stm.execute(Constraint);
+            constraint = constraint.substring(0, constraint.length() - 1);
+            constraint += ";";
+            
+           
+            System.out.print(""+constraint);
+            
+            return stm.execute(constraint);
         } catch (Exception e) {
             return false;
         }

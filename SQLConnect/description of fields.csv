@@ -3,5 +3,4 @@ prod_name,varchar(20),pk
 prod_type,varchar(20),pk
 prod_amt,varchar,
 prod_price,int,NOT NUL
-prod_discount,int
-
+prod_discount,int,
