@@ -18,19 +18,19 @@ public class SQLConnect {
 
         var url = "jdbc:postgresql://localhost:5432/postgres";
         var user = "postgres";
-        var pass = "postgres";
+        var pass = "POSTGRES";
         var name = "my_table";
-        var condition = "v_id=25";
-        var col4 = "cucumber text";
-
-        String[][] rows = {{"25", "'rtyy'", "'ert'"}, {"34", "'tgtg'", "'34'"}, {"432", "'fdgdf'", "'dfgdf'"}};
+//        var condition = "v_id=25";
+//        var col4 = "cucumber text";
+//
+//        String[][] rows = {{"25", "'rtyy'", "'ert'"}, {"34", "'tgtg'", "'34'"}, {"432", "'fdgdf'", "'dfgdf'"}};
         con.connect(url, user, pass);
-
-        var arr = new String[3];
-        arr[0] = "v_id SERIAL";
-        arr[1] = "v_name text";
-        arr[2] = "potato varchar(10)";
-        
+//
+//        var arr = new String[3];
+//        arr[0] = "v_id SERIAL";
+//        arr[1] = "v_name text";
+//        arr[2] = "potato varchar(10)";
+//        
 
 //        if (con.create(name, arr)) {
 //            System.out.println("YES, create.");
@@ -77,48 +77,42 @@ public class SQLConnect {
      arrF = FileParser.ArrayListToArray(parsedFile);
      
      String[] Fields = new String [arrF.length-1];
-     String[] ConstraintCol = new String [arrF.length-1];
+     
      // берём имя таблицы из матрицы
      name = arrF[0][0];
-     
-     // сохраняем массив с ограничениями
-     for(int i= 1;i<arrF.length;i++)
-     {
-         ConstraintCol[i-1]= arrF[i][2];
-         System.out.println(ConstraintCol[i-1]);
-     }
-     // сщхраняем массив с полями 
+      // сохраняем массив с полями 
      for(int i= 1;i<arrF.length;i++)         
      {
          Fields[i-1] = arrF[i][0]+" "+arrF[i][1];
-          System.out.println(Fields[i-1]);
+          System.out.println("поля "+Fields[i-1]);
      }
      
-    if (con.create(name, Fields)) {
+     if (con.create(name, Fields)) {
             System.out.println("YES,table create.");
-    }
-    
-    String[] colunms = new String [Fields.length];
-    for(int i= 1;i<arrF.length;i++)         
+     }      
+     // устанавливаем ограничения ,primary key
+     String columnsPK="";
+     for(int i= 1;i<arrF.length;i++)
      {
-         colunms[i-1]  = arrF[i][0];
-         
-     }
-    String PK="";
-        for(int i=1;i<arrF.length;i++){ 
-             for(int j=0;j<arrF[i].length;j++){
-            if(arrF[i][j]=="pk"){
+         String PK = arrF[i][2];
+        if(PK.equalsIgnoreCase("pk"))
+        {
+            columnsPK=columnsPK+arrF[i][0]+",";
             
-                PK=PK +arrF[i][0]+",";
-            }
-                 
-                 
-            }
-         }
+        } 
+         String column=arrF[i][0];
+         String constraint = arrF[i][2];
+     
+        if(con.AddUniqueConstraint(name, column, constraint))
+        {
+        System.out.println("__constraint++__");
+        }
+     }
+     
+    columnsPK = columnsPK.substring(0, columnsPK.length() - 1);
     
-//    if (con.AddUniqueConstraint(name,colunms, ConstraintCol)) {
-//            System.out.println("YES,Constraint create.");
-//    }
-
-}
+    con.PrimaryKey(name, columnsPK);
+   
+     
+   }
 }

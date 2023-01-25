@@ -63,12 +63,12 @@ public class FileParser {
                 array[i++]=(String[])row;
             }           
      //     String [][] array=list.toArray(new String[list.size()][]);
-               for(String [] rows :array){ 
-                   for(String el: rows){
-            System.out.print(el+" ");
-                   } 
-                 System.out.println();  
-               }
+//               for(String [] rows :array){ 
+//                   for(String el: rows){
+//            System.out.print(el+" ");
+//                   } 
+//                 System.out.println();  
+//               }
             return array;
             } catch(Exception ex)
             {
