@@ -93,28 +93,28 @@ public class ConnectSQLClass implements ISQL {
 
     @Override
     public LinkedList<String> select(String tableName, String[] columns) {
-        LinkedList<String> list = new LinkedList<String>();
+        LinkedList<String> list = new LinkedList<>();
         try {
 
-            String sel = "";
+            String sel = "SELECT ";
 
             for (String col : columns) {
                 sel += col + ',';
             }
-            sel = sel.substring(-2);
-            sel += "FROM " + tableName + ';';
-
+            sel = sel.substring(0, sel.length()-1);
+            sel += " FROM " + tableName + ';';
+            System.out.println(sel);
             ResultSet rs = stm.executeQuery(sel);
-            String res = "";
             while (rs.next()) {
-                int i = 1;
-                res += rs.getString(i) + ',';
+                String res = "";
+                for (int i=0; i < columns.length;i++){
+                    res += rs.getString(columns[i]) + ',';
+                    System.out.println(res);
+                }
                 list.add(res);
-                i++;
-
             }
             return list;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             return list;
 
         }
@@ -254,17 +254,26 @@ public class ConnectSQLClass implements ISQL {
 
     }
 
-    public boolean AddUniqueConstraint(String tableName, String column,String Constraint) {
+    public boolean AddConstraint(String tableName, String column,String Constraint) {
         try {
 //      ALTER TABLE employee ADD CONSTRAINT employee_unq UNIQUE(email);
+            if(Constraint.equalsIgnoreCase("NOT NULL"))
+            {
+            String constraint = "ALTER TABLE " + tableName +" ALTER COLUMN "+ column +" Set "+Constraint;
+            
+            stm.execute(constraint);
+            return true;
+            }
+            else{
 
             String constraint = "ALTER TABLE " + tableName + " ADD CONSTRAINT " + tableName + "_";
                         
                 constraint += column +"_"+ Constraint.replaceAll(" ", "_") +" "+ Constraint.replaceAll("_", " ")+"(" + column + ");";
-                      
-            System.out.println(""+constraint);
+                    
             
-            return stm.execute(constraint);
+            stm.execute(constraint);
+            return true;
+            }
         } catch (Exception e) {
             return false;
         }

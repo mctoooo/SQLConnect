@@ -5,6 +5,7 @@
 package com.mycompany.sqlconnect;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -18,7 +19,7 @@ public class SQLConnect {
 
         var url = "jdbc:postgresql://localhost:5432/postgres";
         var user = "postgres";
-        var pass = "POSTGRES";
+        var pass = "postgres";
         var name = "my_table";
 //        var condition = "v_id=25";
 //        var col4 = "cucumber text";
@@ -84,7 +85,7 @@ public class SQLConnect {
      for(int i= 1;i<arrF.length;i++)         
      {
          Fields[i-1] = arrF[i][0]+" "+arrF[i][1];
-          System.out.println("поля "+Fields[i-1]);
+          
      }
      
      if (con.create(name, Fields)) {
@@ -103,7 +104,7 @@ public class SQLConnect {
          String column=arrF[i][0];
          String constraint = arrF[i][2];
      
-        if(con.AddUniqueConstraint(name, column, constraint))
+        if(con.AddConstraint(name, column, constraint))
         {
         System.out.println("__constraint++__");
         }
@@ -113,6 +114,20 @@ public class SQLConnect {
     
     con.PrimaryKey(name, columnsPK);
    
-     
+    pathName ="content.csv";
+    parsedFile = FileParser.Parser(pathName);
+    String [][] arrContent ;
+     arrContent = FileParser.ArrayListToArray(parsedFile);
+     if(con.insert(name, arrContent) != -1)
+     {
+         System.out.println("--inserted--");
+     }
+     LinkedList<String> list = new LinkedList<>();
+     String [] columns = {"prod_name","prod_type"};
+     list=con.select(name, columns);
+     for(String el:list)
+     {
+     System.out.println("EL - "+el);
+     }
    }
 }

@@ -1,6 +1,6 @@
-potato,chocolade,peper,paint,qiwi,backwheat
-Iran,Russ,black,black,Turcey,fresh harvest
-300kg,50,5kg,80L,30kg,200kg
-39,65,234,43,78,900
-0,30,12,5,3,7
-
+'potato','Iran','300kg',39,0
+'chocolade','Russ','50',65,30
+'peper','black','5kg',234,12
+'paint','black','80L',43,5
+'qiwi','Turcey','30kg',78,3
+'backwheat','fresh harvest','200kg',900,7
